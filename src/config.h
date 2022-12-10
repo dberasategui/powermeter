@@ -40,7 +40,8 @@
         #define _WEBSOCK_TASKCORE    1
         #define _OTA_TASKCORE        1
         #define _WEBSERVER_TASKCORE  1
-        #define _NTP_TASKCORE        1  
+        #define _NTP_TASKCORE        1 
+        #define _DETECT_TASKCORE     1 
     
     #endif // CONFIG_FREERTOS_UNICORE
     /*

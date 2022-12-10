@@ -33,6 +33,7 @@
 #include "ntp.h"
 #include "webserver.h"
 #include "wificlient.h"
+#include "detect.h"
 /**
  * @brief arduino setup function
  */
@@ -57,6 +58,7 @@ void setup( void ) {
     mqtt_client_StartTask();
     asyncwebserver_StartTask();
     ntp_StartTask();
+    detect_StartTask();
 }
 
 /**

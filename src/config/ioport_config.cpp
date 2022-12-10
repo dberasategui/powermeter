@@ -69,15 +69,12 @@ bool ioport_config_t::onLoad(JsonDocument& doc) {
 }
 
 bool ioport_config_t::onDefault( void ) {
-/*
-    sda = 5;
-    sck = 18;
-    flip = false;
-    refreshrate = 5;
-    infocount = DISPLAY_MAX_INFO;
+    // snprintf( ioport[ 0 ].name, sizeof( ioport[ 0 ].name ), "Relay 0");
+    // snprintf( ioport[ 0 ].start_state, sizeof( ioport[ 0 ].start_state ), true);
+    // snprintf( ioport[ 0 ].active, sizeof( ioport[ 0 ].active ), true);
+    // snprintf( ioport[ 0 ].gpio_pin_num, sizeof( ioport[ 0 ].gpio_pin_num ), 32);
+    // snprintf( ioport[ 0 ].value_channel, sizeof(ioport[ 0 ].value_channel, 1 ));
+    // snprintf( ioport[ 0 ].trigger, sizeof(ioport[ 0 ].trigger), IOPORT_TRIGGER_HIGHER);
 
-    for( int i = 0 ; i < DISPLAY_MAX_INFO ; i++ )
-        displayinfo[ i ].type = CHANNEL_NOT_USED;
-*/
     return true;
 }

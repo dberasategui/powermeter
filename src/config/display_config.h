@@ -49,9 +49,9 @@
     class display_config_t : public BaseJsonConfig {
         public:
             display_config_t();
-            bool active = false;
+            bool active = true;
             int sda = 5;
-            int sck = 18;
+            int sck = 4;
             bool flip = false;
             int refreshinterval = 5;
             int infocount = DISPLAY_MAX_INFO;

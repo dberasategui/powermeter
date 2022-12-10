@@ -74,6 +74,8 @@ bool wificlient_config_t::onDefault( void ) {
     WiFi.macAddress( mac );
     snprintf( hostname, sizeof( hostname ), "powermeter_%02x%02x%02x", mac[3], mac[4], mac[5] );
     snprintf( softap_ssid, sizeof( softap_ssid ), "powermeter_%02x%02x%02x", mac[3], mac[4], mac[5] );
-
+    snprintf( ssid, sizeof( ssid ), "Magistrado 2.4GHz");
+    snprintf( password, sizeof( password ), "cuLeBronJames23");
+    
     return true;
 }
