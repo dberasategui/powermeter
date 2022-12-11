@@ -100,7 +100,6 @@ void detect_mes( void ) {
         vTaskDelay(1000);
         digitalWrite(33, LOW);
         log_i("GRUPO ELECTROGENO activo y conectado!");
-
     }
     else return;
 }
