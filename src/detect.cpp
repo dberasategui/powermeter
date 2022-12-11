@@ -3,6 +3,8 @@
 #include <arduinoFFT.h>
 #include <math.h>
 
+#include "esp_wifi.h"
+
 #include "config/measure_config.h"
 #include "measure.h"
 #include "config.h"
@@ -24,6 +26,7 @@ void detect_Task( void * pvParameters ) {
 
     while( true ) {
         detect_mes();
+        vTaskDelay( 10000 );
     }
 }
 /**
@@ -51,6 +54,7 @@ void detect_init( void ) {
     pinMode(33, OUTPUT );
     pinMode(25, OUTPUT );
     pinMode(26, OUTPUT );
+    // rutina de startup de relays
     digitalWrite(32, HIGH);
     digitalWrite(33, HIGH);
     digitalWrite(25, HIGH);
@@ -70,21 +74,34 @@ void detect_init( void ) {
     digitalWrite(33, LOW);
     digitalWrite(25, LOW);
     digitalWrite(26, LOW);
-    //log_e("V=%.3f ", measure_get_channel_rms( CHANNEL_1 ) );    //float rms = measure_get_channel_true_rms( CHANNEL_1 );
-
+    vTaskDelay(1000);
+    digitalWrite(32, LOW);
+    digitalWrite(33, HIGH);
+    digitalWrite(25, HIGH);
+    digitalWrite(26, HIGH);
+    
 }
 
 void detect_mes( void ) {
-    int round = 0;
+    float tension = measure_get_channel_rms( CHANNEL_1 );
+    float under_voltage = 180;
+    float over_voltage = 245;
 
-    if ( round < 4 ) {
-        vTaskDelay( 100 );
-        log_e("V=%.3f ", measure_get_channel_rms( CHANNEL_1 ) ); 
-        //log_e("V: ", rms);
-        round++;
+    if (under_voltage < tension){
+        digitalWrite(32, LOW);
+        digitalWrite(33, HIGH);
+        digitalWrite(25, HIGH);
+        digitalWrite(26, HIGH);
+        log_i("Red activa y conectada!");
+    }        
+
+    else if (tension < under_voltage ){
+        digitalWrite(32, HIGH);
+        vTaskDelay(1000);
+        digitalWrite(33, LOW);
+        log_i("GRUPO ELECTROGENO activo y conectado!");
+
     }
-
-    return;
-    //log_e("V: ", measure_get_channel_rms( CHANNEL_1 ));
+    else return;
 }
 
