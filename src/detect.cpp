@@ -26,7 +26,7 @@ void detect_Task( void * pvParameters ) {
 
     while( true ) {
         detect_mes();
-        vTaskDelay( 10000 );
+        //vTaskDelay( 10000 );
     }
 }
 /**
@@ -79,7 +79,6 @@ void detect_init( void ) {
     digitalWrite(33, HIGH);
     digitalWrite(25, HIGH);
     digitalWrite(26, HIGH);
-    
 }
 
 void detect_mes( void ) {
@@ -93,6 +92,7 @@ void detect_mes( void ) {
         digitalWrite(25, HIGH);
         digitalWrite(26, HIGH);
         log_i("Red activa y conectada!");
+        vTaskDelay(10000);
     }        
 
     else if (tension < under_voltage ){
@@ -100,7 +100,7 @@ void detect_mes( void ) {
         vTaskDelay(1000);
         digitalWrite(33, LOW);
         log_i("GRUPO ELECTROGENO activo y conectado!");
+        vTaskDelay(10000);
     }
     else return;
 }
-
