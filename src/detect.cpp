@@ -102,19 +102,25 @@ void detect_mes( void ) {
     if (under_voltage < tension_red){
         log_e("VRED=%.3f ", measure_get_channel_rms( CHANNEL_1 ) );
         cont1++;
-          log_e("count1=%d ",cont1 );
+        log_e("count1=%d ",cont1 );
         if(cont1>=5){        
         f_red_ok = true;
-        cont1 = 0;}        
-    }
+        log_e("RED_OK: %d ",f_red_ok );
+        cont1 = 0;
+        log_e("count1=%d ",cont1 );}  
+
+    }else { 
     //  CHECK RED NO OK
-    if (under_voltage > tension_red){ 
+    // if (under_voltage > tension_red)    
         log_e("VRED=%.3f ", measure_get_channel_rms( CHANNEL_1 ) );
-         log_e("count2=%d ",cont2 );
         cont2++;
+        log_e("count2=%d ",cont2 );        
         if(cont2>=5){        
         f_red_ok = false;
-        cont2 = 0;}
+        log_e("RED_OK: %d ",f_red_ok );
+        cont2 = 0;
+        log_e("count2=%d ",cont2 );}
+
     }
     //  CHECK GEN OK
     if (under_voltage < tension_gen){
@@ -123,30 +129,36 @@ void detect_mes( void ) {
         log_e("count3=%d ",cont3 );
         if(cont3>=5){        
         f_gen_ok = true;
-        cont3 = 0;}        
-    }
+        log_e("GEN_OK: %d ",f_gen_ok );
+        cont3 = 0;
+        log_e("count3=%d ",cont3 );}        
+    }else { 
     //  CHECK GEN NO OK
-    if (under_voltage > tension_gen){ 
+    // if (under_voltage > tension_gen){ 
         log_e("VGEN=%.3f ", measure_get_channel_rms( CHANNEL_5 ) );
         cont4++;
+        log_e("count4=%d ",cont4 );
         if(cont4>=5){        
         f_red_ok = false;
-        cont4 = 0;}
+        log_e("GEN_OK: %d ",f_gen_ok );
+        cont4 = 0;
+        log_e("count4=%d ",cont4 );}
     } 
     //ACTION
 
     if (f_red_ok==true){
+        digitalWrite(33, HIGH);
         vTaskDelay(1000);
         digitalWrite(32, LOW);
         log_i("Red conectada!");
         log_e("VRED=%.3f ", measure_get_channel_rms( CHANNEL_1 ) );
-    }
-
-    if (f_red_ok==false){
-        digitalWrite(32, HIGH);
+    }else {
+    // if (f_red_ok==false){
         vTaskDelay(1000);
         //arrancar generador
-        if(f_gen_ok==true){            
+        if(f_gen_ok==true){    
+            digitalWrite(32, HIGH);  
+            vTaskDelay(1000);       
             digitalWrite(33, LOW);
             log_i("GRUPO ELECTROGENO conectado!");
             log_e("VGEN=%.3f ", measure_get_channel_rms( CHANNEL_5 ) );
