@@ -55,43 +55,47 @@ void detect_StartTask( void ) {
 void detect_init( void ) {
     log_i("Start Detect Task on Core: %d", xPortGetCoreID() );
     vTaskDelay(1000);
-    pinMode(32, OUTPUT );
-    pinMode(33, OUTPUT );
-    pinMode(25, OUTPUT );
-    pinMode(26, OUTPUT );
-    // rutina de startup de relays
-    digitalWrite(32, HIGH);
+    pinMode(33, OUTPUT );   //32 33
+    pinMode(25, OUTPUT );   //33 25
+    pinMode(26, OUTPUT );   //25 26
+    pinMode(27, OUTPUT );   //26 27
+                            // GPIO 14  
+                            // GPIO12  
+                            // GPIO 13
+                            // GPIO15
+    // rutina de startup de relays -- 33 25 27 26
     digitalWrite(33, HIGH);
     digitalWrite(25, HIGH);
     digitalWrite(26, HIGH);
+    digitalWrite(27, HIGH);
     vTaskDelay(1000);
-    digitalWrite(32, LOW);
-    vTaskDelay(100);
     digitalWrite(33, LOW);
     vTaskDelay(100);
     digitalWrite(25, LOW);
     vTaskDelay(100);
     digitalWrite(26, LOW);
     vTaskDelay(100);
-    vTaskDelay(1000);
-    digitalWrite(32, HIGH);
+    digitalWrite(27, LOW);
     vTaskDelay(100);
+    vTaskDelay(1000);
     digitalWrite(33, HIGH);
     vTaskDelay(100);
     digitalWrite(25, HIGH);
     vTaskDelay(100);
     digitalWrite(26, HIGH);
     vTaskDelay(100);
+    digitalWrite(27, HIGH);
+    vTaskDelay(100);
     vTaskDelay(1000);
-    digitalWrite(32, LOW);
     digitalWrite(33, LOW);
     digitalWrite(25, LOW);
     digitalWrite(26, LOW);
+    digitalWrite(27, LOW);
     vTaskDelay(1000);
-    digitalWrite(32, HIGH);
     digitalWrite(33, HIGH);
     digitalWrite(25, HIGH);
     digitalWrite(26, HIGH);
+    digitalWrite(27, HIGH);
 }
 
 void detect_mes( void ) {
@@ -131,22 +135,22 @@ void detect_mes( void ) {
     }
     //ACTION
     if (f_red_ok==true){
-        digitalWrite(33, HIGH);
+        digitalWrite(25, HIGH);
         vTaskDelay(1000);
-        digitalWrite(32, LOW);
+        digitalWrite(33, LOW);
         log_i("Red conectada!");
         log_e("VRED=%.3f ", measure_get_channel_rms( CHANNEL_1 ) );
-    } else digitalWrite(32, HIGH);
+    } else digitalWrite(33, HIGH);
 
     if (f_gen_ok==true){
         if(f_red_ok==false){
-            digitalWrite(32, HIGH);
+            digitalWrite(33, HIGH);
             vTaskDelay(1000);
-            digitalWrite(33, LOW);
+            digitalWrite(25, LOW);
             log_i("GRUPO ELECTROGENO conectado!");
             log_e("VGEN=%.3f ", measure_get_channel_rms( CHANNEL_5 ) );
         }
-    } else digitalWrite(33, HIGH);
+    } else digitalWrite(25, HIGH);
 
     return;
 }
